@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdqj0qkygjhvc"]
+
+[ext_resource type="Script" path="res://scripts/camera_pos.gd" id="1_kdf7w"]
+
+[node name="camera_pos" type="Node3D"]
+script = ExtResource("1_kdf7w")
