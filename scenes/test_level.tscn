@@ -68,4 +68,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0204552, 0.5, 1.02465)
 [node name="CameraRig" parent="." instance=ExtResource("4_v701c")]
 
 [node name="camera_pos" parent="." instance=ExtResource("5_87wnb")]
-transform = Transform3D(1, 0, 0, 0, 0.837032, 0.547154, 0, -0.547154, 0.837032, 0, 4.76992, 4.73175)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -0.266466, 6.0629, 5.08658)

@@ -4,7 +4,7 @@ var player:Node
 
 var camera_pos:Node
 
-var is_aiming = true
+var is_aiming = false
 
 func set_player(player_node):
 	player = player_node
