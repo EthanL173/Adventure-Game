@@ -7,6 +7,12 @@ extends Node3D
 var ray_origin = Vector3()
 var ray_target = Vector3()
 
+func _input(event):
+	if event.is_action_pressed("right_click"):
+		GameManager.is_aiming = true
+	elif event.is_action_released("right_click"):
+		GameManager.is_aiming = false
+
 
 
 func _physics_process(delta):
@@ -21,17 +27,21 @@ func _physics_process(delta):
 	ray_query.to = to
 	ray_query.collide_with_areas = true
 	var raycast_result = space.intersect_ray(ray_query)
-	if Input.is_action_pressed("right_click"):
-		#if raycast_result.is_empty():
-			#print("empty")
-		if not raycast_result.is_empty():
-			#print("Not empty")
-			GameManager.is_aiming = true
-			var pos = raycast_result.position
-			var look_at_me = Vector3(pos.x, GameManager.player.position.y, pos.z)
+	
+	if not raycast_result.is_empty():
+
+		var pos = raycast_result.position
+		var look_at_me = Vector3(pos.x, GameManager.player.position.y, pos.z)
+		
+		if GameManager.is_aiming == true:
+			GameManager.player.is_looking = false
+			GameManager.player.visuals.look_at(look_at_me, Vector3.UP) 
+			
+		elif GameManager.player.velocity == Vector3.ZERO and GameManager.player.is_looking:
 			GameManager.player.visuals.look_at(look_at_me, Vector3.UP)
-	else:
-		GameManager.is_aiming = false
+			
+		else:
+			GameManager.is_aiming = false
 		 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -12,7 +12,19 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var visuals = $visuals
 @onready var anime_tree = $visuals/player/AnimationTree
 
+
 var is_walking = false
+
+var is_looking
+
+var ray_range = 2000.0
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		is_looking = true
+		
+	#if event.is_action_pressed("left_click"):
+		#shoot()
 
 
 func _ready():
@@ -21,22 +33,17 @@ func _ready():
 	anime.set_blend_time("idle", "walk", 0.2)
 	anime.set_blend_time("walk", "idle", 0.2)
 	
+	
 func _process(delta):
 	anime_parameters()
 	
 func _physics_process(delta):
 	
-	#print("walking: ", is_walking)
-	#print("aiming: ", GameManager.is_aiming)
+	
 	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
-	# Handle jump.
-	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-	#	velocity.y = JUMP_VELOCITY
-	
 	
 	
 	# Get the input direction and handle the movement/deceleration.
@@ -46,26 +53,28 @@ func _physics_process(delta):
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
-		
+		is_looking = false
 		visuals.look_at(direction + position)
 		
-		#if !is_walking:
-			#is_walking = true
-			#print("first if")
-			#anime.play("walk")
 			
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-		#if is_walking:
-			#is_walking = false
-			#print("second if")
-			#anime.play("idle")
 			
 			
 	move_and_slide()
 	
+	
+#func shoot():
+	#for n in 10:
+		#ray_pos.target_position.x = randf_range(-50, 50)
+		#if ray_pos.is_colliding():
+			#print("Hit ")
+		#elif !ray_pos.is_colliding():
+			#print("No Hit")
+		#print(ray_pos.target_position.x)
+	#ray_pos.target_position.x = 0.0
 	
 func anime_parameters():
 	if(velocity == Vector3.ZERO):
